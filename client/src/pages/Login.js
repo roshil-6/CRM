@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
+import API_BASE_URL from '../config/api';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,9 +29,33 @@ const Login = () => {
     setLoading(false);
   };
 
+  const [serverStatus, setServerStatus] = useState('checking'); // checking, online, offline
+
+  // Wake up the server on load
+  React.useEffect(() => {
+    const wakeUpServer = async () => {
+      try {
+        console.log('⏰ Waking up server...');
+        // Simple ping to wake up Render
+        await fetch(`${API_BASE_URL}/api/auth/me`, { mode: 'no-cors' });
+        setServerStatus('online');
+        console.log('✅ Server is awake!');
+      } catch (err) {
+        console.log('💤 Server might be sleeping...', err);
+        setServerStatus('offline');
+      }
+    };
+    wakeUpServer();
+  }, []);
+
   return (
     <div className="login-container">
       <div className="login-card">
+        {serverStatus === 'checking' && (
+          <div style={{ padding: '10px', background: '#e3f2fd', color: '#0d47a1', borderRadius: '4px', marginBottom: '15px', fontSize: '14px', textAlign: 'center' }}>
+            ⏳ Connecting to server... (might take 30s)
+          </div>
+        )}
         <div className="login-header">
           <h1>Tonio & Senora</h1>
           <p>CRM System</p>

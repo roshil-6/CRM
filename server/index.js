@@ -17,7 +17,10 @@ const app = express();
 const PORT = process.env.PORT || 5002;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['https://roshil-6.github.io', 'http://localhost:3000', 'http://localhost:3001'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Test database connection
@@ -81,7 +84,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📡 API available at http://localhost:${PORT}/api`);
-  
+
   // Start email scheduler (wrap in try-catch to prevent server crash)
   try {
     startEmailScheduler();
