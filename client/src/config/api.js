@@ -1,6 +1,6 @@
 // API Base URL - uses environment variable in production, localhost in development
-const API_BASE_URL = process.env.REACT_APP_API_URL || 
-  (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5002');
+// Hardcoded for immediate stability
+const API_BASE_URL = 'https://crm-2b00.onrender.com';
 
 // Debug: Log API URL on load
 console.log('🔍 API Configuration:', {

@@ -187,7 +187,7 @@ router.get('/login/logs', authenticate, requireAdmin, async (req, res) => {
     const filter = {};
     if (email) filter.email = email;
     if (success !== undefined) filter.success = success === 'true';
-    
+
     const logs = await db.getLoginLogs(filter);
     const limitedLogs = logs.slice(0, parseInt(limit));
     res.json(limitedLogs);
