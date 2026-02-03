@@ -17,9 +17,11 @@ const app = express();
 const PORT = process.env.PORT || 5002;
 
 // Middleware
+// Allow ALL origins to fix CORS issues permanently
 app.use(cors({
-  origin: ['https://roshil-6.github.io', 'http://localhost:3000', 'http://localhost:3001'],
-  credentials: true
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
