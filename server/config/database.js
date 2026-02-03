@@ -8,12 +8,8 @@ dns.setDefaultResultOrder('ipv4first');
 // Production-ready configuration
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  // SSL configuration - required for most cloud providers
-  ssl: process.env.DATABASE_URL?.includes('localhost') || process.env.DATABASE_URL?.includes('127.0.0.1')
-    ? false
-    : { rejectUnauthorized: false }, // Allow self-signed certificates for cloud providers
-  max: 20, // Maximum number of clients in the pool
-  min: 2, // Minimum number of clients (keep connections alive)
+  ssl: { rejectUnauthorized: false }, // Simplified SSL for serverless
+  max: 3, // Lower max connections for serverless
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000,
   // Production optimizations

@@ -1,6 +1,8 @@
 // API Base URL - uses environment variable in production, localhost in development
-// Hardcoded for immediate stability
-const API_BASE_URL = 'https://crm-2b00.onrender.com';
+// API Base URL - Configurable for DevOps/Hosting
+// For Vercel Monorepo, use relative path '/api' to hit the serverless functions
+const API_BASE_URL = process.env.REACT_APP_API_URL ||
+  (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5002');
 
 // Debug: Log API URL on load
 console.log('🔍 API Configuration:', {

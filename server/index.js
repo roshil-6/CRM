@@ -83,15 +83,15 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error', message: err.message });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📡 API available at http://localhost:${PORT}/api`);
+// Output scheduler status
+console.log('   Email scheduler initialized');
 
-  // Start email scheduler (wrap in try-catch to prevent server crash)
-  try {
-    startEmailScheduler();
-  } catch (error) {
-    console.error('⚠️  Warning: Email scheduler failed to start:', error.message);
-    console.log('   Server will continue without email scheduler');
-  }
-});
+// For Vercel Serverless
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    startEmailScheduler(); // Only run scheduler in persistent server mode
+  });
+}
+
+module.exports = app;
